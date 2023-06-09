@@ -1,0 +1,8 @@
+// 預設變數覆蓋需要在導入Bootstrap之前
+$primary: #b1aa97;
+$secondary:#b1aa97;
+$success: #b1aa97;
+$muted: #b1aa97;
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
