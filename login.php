@@ -113,12 +113,6 @@ if (isset($_SESSION['admin'])) {
 
 
 
-
-
-
-
-
-
         if (isPass) {
             const fd = new FormData(document.form1);
 
@@ -130,7 +124,7 @@ if (isset($_SESSION['admin'])) {
 
                 if (obj.success) {
                     showAlert('登入成功!', 'SUCC');
-                    setTimeout("location.href='index_.php'", 1300);
+                    setTimeout("location.href='index.php'", 1300);
                 } else {
                     showAlert(obj.msg);
                 }
