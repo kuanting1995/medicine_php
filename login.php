@@ -33,10 +33,17 @@ if (isset($_SESSION['admin'])) {
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">密碼</label>
-                            <input type="password" class="form-control postion-relative" id="password" name="password" required>
-                            <div class="form-text"></div>
+                            <div class="position-relative">
+                                <input type="password" class="form-control  " id="password" name="password" required>
+                                <div id="seepass" class="col">
+                                    <i id="seepass1" style="display: none;color:gray" class="fa-solid fa-eye"></i>
+                                    <i id="seepass2" style="display: inline;color:gray" class="fa-solid fa-eye-slash"></i>
+                                </div>
+                                <div class="form-text"></div>
+                            </div>
                         </div>
-                        <div class="text-end mt-4"> <button type="submit" class="btn btn-primary">登入</button></div>
+                        <div id="formAlert" class="alert alert-info" style="display:none;"></div>
+                        <div class="text-end mt-4"> <button type="submit" class="btn btn-rgst">登入</button></div>
                     </form>
                 </div>
             </div>
@@ -46,57 +53,90 @@ if (isset($_SESSION['admin'])) {
 
 <?php include __DIR__ . '/parts/scripts.php' ?>
 <script>
-    const checkForm = (event) => {
+    //alert
+    const formAlert = document.querySelector('#formAlert');
+    const showAlert = function(msg = '登入失敗', type = 'INFO') {
+        formAlert.innerHTML = msg;
+        formAlert.className = `alert alert-${type}`;
+        formAlert.style.display = 'block';
+    };
+
+    //form-text
+    const form_text = document.querySelectorAll(".form-text");
+
+    //seepass
+    document.getElementById("seepass").onmousedown = function() {
+        document.getElementById("password").type = "text";
+        seepass1.style.display = "inline";
+        seepass2.style.display = "none";
+    }
+    document.getElementById("seepass").onmouseup = function() {
+        document.getElementById("password").type = "password";
+        seepass1.style.display = "none";
+        seepass2.style.display = "inline";
+
+    }
+
+    //驗證帳密
+    const checkForm = function(event) {
+        let p2 = document.form1.password2;
         event.preventDefault();
+        // 欄位外觀回復原來的樣子
+        document.form1.querySelectorAll(`input`).forEach(el => {
+            el.style.border = '1px solid #ced4da';
+            form_text[0].innerHTML = '';
+            form_text[1].innerHTML = '';
+        })
 
-        // 如果輸入正確，欄位外觀恢復原來的樣子
-        document.form1.querySelectorAll('input').forEach((el) => {
-            el.style.border = '1px solid #CCCCCC';
-            el.nextElementSibling.innerHTML = '';
-        });
 
-        // 前端資料驗證
+        // TODO: 欄位檢查
+
         let isPass = true;
 
-
-        // 驗證帳號
         let field = document.form1.account;
-        if (!field.value.length) {
+        if (field.value.length > 3) {
+            isPass = true;
+        } else {
             isPass = false;
             field.style.border = '2px solid red';
-            field.nextElementSibling.innerHTML = '請輸入帳號'
+            form_text[0].innerHTML = '請輸入帳號';
         }
 
-        //驗證密碼
         field = document.form1.password;
-        if (!field.value.length) {
+        if (field.value.length > 0) {
+            isPass = true;
+        } else {
             isPass = false;
             field.style.border = '2px solid red';
-            field.nextElementSibling.innerHTML = '請輸入密碼'
+            form_text[1].innerHTML = '請輸入密碼';
         }
 
-        ;
+
+
+
+
+
+
+
 
         if (isPass) {
             const fd = new FormData(document.form1);
 
             fetch('login-api.php', {
-                    method: 'POST',
-                    body: fd
-                })
-                .then(r => r.json())
-                .then(obj => {
-                    console.log(obj);
-                    if (obj.success) {
-                        alert('登入成功!')
-                        //跳轉頁面   
-                        window.location.href = 'index.php';
-                    } else {
-                        alert('帳密錯誤!')
-                    };
-                })
-        }
+                method: 'POST',
+                body: fd,
+            }).then(r => r.json()).then(obj => {
+                console.log(obj);
 
+                if (obj.success) {
+                    showAlert('登入成功!', 'SUCC');
+                    setTimeout("location.href='index_.php'", 1300);
+                } else {
+                    showAlert(obj.msg);
+                }
+
+            })
+        }
     }
 </script>
 <?php include __DIR__ . '/parts/html-foot.php' ?>
