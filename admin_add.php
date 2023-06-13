@@ -22,21 +22,23 @@ if (isset($_SESSION['admin'])) {
     <div class="row justify-content-center align-items-center" style="height:95vh;">
         <div class="col-lg-4">
             <div class="card">
-                <div class="card-body">
-                    <h5 class=" card-title text-center">管理者登入</h5>
+                <div class="card-body text-center">
+                    <h5 class="card-title">管理者登入</h5>
                     <form name="form1" onsubmit="checkForm(event)" novalidate>
 
                         <div class="mb-3">
-                            <label for="acount" class="form-label">帳號</label>
-                            <input type="text" class="form-control" id="account" name="account" required>
+                            <div class="">帳號
+                                <span style="color: lightcoral;font-size: 10px;">&nbsp;&nbsp;*必填</span>
+                            </div>
+                            <div><input type="text" class="form-control" id="account" name="account" required></div>
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">密碼</label>
-                            <input type="password" class="form-control postion-relative" id="password" name="password" required>
+                            <label for="password" class="">密碼</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
                             <div class="form-text"></div>
                         </div>
-                        <div class="text-end mt-4"> <button type="submit" class="btn btn-primary">登入</button></div>
+                        <button type="submit" class="btn btn-primary">登入</button>
                     </form>
                 </div>
             </div>
@@ -75,7 +77,7 @@ if (isset($_SESSION['admin'])) {
             field.nextElementSibling.innerHTML = '請輸入密碼'
         }
 
-        ;
+
 
         if (isPass) {
             const fd = new FormData(document.form1);

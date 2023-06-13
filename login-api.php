@@ -10,7 +10,7 @@ $output = [
   'postData' => $_POST,
 ];
 
-if(empty($_POST['account'] or $_POST['password'])){
+if (empty($_POST['account'] or $_POST['password'])) {
   $output['error'] = '資料不足';
   echo json_encode($output, JSON_UNESCAPED_UNICODE);
   exit;
@@ -19,29 +19,29 @@ if(empty($_POST['account'] or $_POST['password'])){
 // 取得資料
 $sql = "SELECT * FROM `admins` WHERE `account`=?";
 
-$stmt = $pdo -> prepare($sql);
+$stmt = $pdo->prepare($sql);
 
-$stmt -> execute([
+$stmt->execute([
   $_POST['account']
 ]);
 
 //驗證帳號
 $r = $stmt->fetch();
-if(empty($r)){
+if (empty($r)) {
   $output['error'] = '帳號或密碼錯誤';
   echo json_encode($output, JSON_UNESCAPED_UNICODE);
   exit;
 }
 
 //驗證密碼
-$hash = $r['password_hash'];
-$output['success'] = password_verify($_POST['password'],$hash);
+$hash = $r['password'];
+$output['success'] = password_verify($_POST['password'], $hash);
 
-if($output['success']){
+if ($output['success']) {
   $_SESSION['admin'] = [
     'account' => $r['account']
   ];
-}else{
+} else {
   $output['error'] = '帳號或密碼錯誤';
   echo json_encode($output, JSON_UNESCAPED_UNICODE);
   exit;
