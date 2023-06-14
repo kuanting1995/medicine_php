@@ -18,7 +18,7 @@ if (!isset($title)) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <link href="./fontawesome/css/all.css" rel="stylesheet" />
   <title><?= $title ?></title>
-  <link rel="icon" href="../imgupload/index/Lovepik_com-401566179-chocolate-brick.ico" />
+  <link rel="icon" href="/imgupload/index/Lovepik_com-401566179-chocolate-brick.ico" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
 
 <body>

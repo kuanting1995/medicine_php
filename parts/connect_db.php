@@ -1,8 +1,8 @@
 <?php
 $db_host = 'localhost'; //連哪台主機
-$db_user = 'med'; //db使用者帳號
-$db_pass = 'med'; //db使用者密碼 //XAMPP預設沒有密碼
-$db_name = 'med'; //database名稱
+$db_user = 'medicine'; //db使用者帳號
+$db_pass = 'medicine'; //db使用者密碼 //XAMPP預設沒有密碼
+$db_name = 'medicine'; //database名稱
 
 
 $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8";
