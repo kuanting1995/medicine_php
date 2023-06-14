@@ -28,12 +28,12 @@ if (!isset($title)) $title = '';
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">登出</a>
                     </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="register.php">註冊</a>
+                    </li>
                 <?php else : ?>
                     <li class="nav-item">
                         <a class="nav-link <?= $page_name == 'login' ? 'active' : '' ?> " href="login.php">登入</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link " href="register.php">註冊</a>
                     </li>
 
                 <?php endif; ?>
