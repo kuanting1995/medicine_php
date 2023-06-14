@@ -6,4 +6,4 @@ session_start();
 unset($_SESSION['admin']);
 
 // redirect 轉向
-header('Location: index.php');
+header('Location: index-noadmin.php');

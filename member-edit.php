@@ -234,7 +234,7 @@ $dist = $stmt_dist->fetchAll(PDO::FETCH_ASSOC);
 
     const delet = function(event) {
         if (confirm("確認要刪除編號: <?= $r['member_id'] ?> 姓名:「<?= $r['member_name'] ?>」會員嗎?")) {
-            location.href = 'member_delete_api.php?member_id=<?= $r['member_id'] ?>';
+            location.href = 'member-delete-api.php?member_id=<?= $r['member_id'] ?>';
         }
     }
 
