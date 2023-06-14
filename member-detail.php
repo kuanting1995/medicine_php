@@ -3,48 +3,40 @@ require __DIR__ . '/parts/connect_db.php';
 require __DIR__ . '/parts/admin-required.php';
 
 $title = "會員詳細資料";
-$nowpage = "member_detail";
+$nowpage = "member-detail";
 ?>
 
 <?php
 
 $member_id = isset($_GET['member_id']) ? intval($_GET['member_id']) : 0;
 if (empty($member_id)) {
-    header('Location: member_list.php');
+    header('Location: member-list.php');
     exit;
 }
 
 $sql = "SELECT * FROM `members` WHERE `member_id` = $member_id";
 $r = $pdo->query($sql)->fetch();
 if (empty($r)) {
-    header('Location: member_list.php');
+    header('Location: member-list.php');
     exit;
 }
 
 ?>
 
+<?php include __DIR__ . '/parts/html-head.php' ?>
+<?php include __DIR__ . '/parts/navbar.php' ?>
 
 
 
-<?php include __DIR__ . '/parts/html-head.php'; ?>
-<?php include __DIR__ . '/parts/navbar.php'; ?>
-
-<div class="row justify-content-center mb-5">
-    <div class="col-4">
-        <h2 class="text-center">會員詳細資料</h2>
-    </div>
-</div>
-
-
-<div class="container mb-3">
-
-    <div class="buttoncont">
+<div class="container w-75">
+    <div style="height: 5vh"></div>
+    <div class="buttoncont my-3">
         <div class="d-flex flex-row justify-content-end mb-2">
-            <a href="member_list.php" class="btn btn-outline-secondary me-auto" role="button">返回</a>
-            <a class="btn btn-detail me-4 " href="member_edit.php?member_id=<?= $r['member_id'] ?>">
+            <a href="member-list.php" class="btn btn-outline-secondary me-auto" role="button">返回</a>
+            <a class="btn btn-detail me-4 " href="member-edit.php?member_id=<?= $r['member_id'] ?>">
                 <i class="fa-solid fa-pen-to-square"></i>修改資料</a>
 
-            <a href="member_export_one_api.php?id=<?= $r['member_id'] ?>" class="btn btn-outline-secondary me-4" role="button">匯出單筆資料</a>
+            <a href="member-export-one-api.php?id=<?= $r['member_id'] ?>" class="btn btn-outline-secondary me-4" role="button">匯出單筆資料</a>
 
 
         </div>
@@ -163,22 +155,15 @@ if (empty($r)) {
     </div>
 
     <div class="d-flex flex-row justify-content-around">
-        <div class=" me-2"><a href="member_his_order.php?member_id=<?= $member_id ?>" class="me-2"><button class="btn bg-bb">歷史訂單</button></a></div>
-        <div class=""><a href="member_his_comment.php?member_id=<?= $member_id ?>"><button class="btn bg-bb">歷史評論</button></a></div>
+        <div class=" me-2"><a href="member-his-order.php?member_id=<?= $member_id ?>" class="me-2"><button class="btn bg-bb">歷史訂單</button></a></div>
+        <div class=""><a href="member-his-comment.php?member_id=<?= $member_id ?>"><button class="btn bg-bb">歷史評論</button></a></div>
     </div>
 
 </div>
 
 
 
-
-
-
-
-
-
-
-<?php include __DIR__ . '/parts/script.php'; ?>
+<?php include __DIR__ . '/parts/scripts.php'; ?>
 
 <script>
 

@@ -18,7 +18,7 @@ if (isset($_SESSION['admin'])) {
 <?php include __DIR__ . '/parts/sidebars.php' ?>
 
 
-<div class="container">
+<div class="container w-75">
     <div class="row justify-content-center align-items-center" style="height:95vh;">
         <div class="col-lg-4">
             <div class="card">

@@ -7,6 +7,7 @@ $pageSid = 1;
 <?php include __DIR__ . '/parts/css-style.php' ?>
 <?php include __DIR__ . '/parts/navbar.php' ?>
 <?php include __DIR__ . '/parts/sidebars.php' ?>
+<?php include __DIR__ . '/parts/gototop.php' ?>
 
 <div class="w-100 h-100 position-absolute" style="background-image: url('./imgupload/index/bg001.webp');background-position: center; background-size: auto; z-index:-1; opacity: .3;">
 </div>

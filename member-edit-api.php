@@ -1,6 +1,6 @@
 <?php 
 require __DIR__.'/parts/connect_db.php';
-require __DIR__.'/parts/admin_required_for_api.php.';
+require __DIR__.'/parts/admin-required-for-api.php';
 
 
 $output = [
@@ -45,7 +45,7 @@ if(!empty($email) and !filter_var($email,FILTER_VALIDATE_EMAIL)){
 
 
 if($isPass){   
-    $sql= "UPDATE `member_list` SET `member_name`=?,`email`=?,`mobile`=?,`gender`=?,`birthday`=?,`address_city`=?,`address_dist`=?,`address_rd`=?,`member_level_id`=? WHERE `member_id`=?";
+    $sql= "UPDATE `members` SET `member_name`=?,`email`=?,`mobile`=?,`gender`=?,`birthday`=?,`address_city`=?,`address_dist`=?,`address_rd`=?,`member_level_id`=? WHERE `member_id`=?";
 
 $stmt = $pdo ->prepare($sql);
 $stmt -> execute(
@@ -75,5 +75,3 @@ $stmt -> execute(
 }
 
 echo json_encode($output,JSON_UNESCAPED_UNICODE);
-
-?>

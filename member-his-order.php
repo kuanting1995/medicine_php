@@ -66,26 +66,26 @@ $nowpage="member_his_order";
 <?php include __DIR__.'/parts/navbar.php'; ?>
 
 <div class="row justify-content-center mb-5">
-        <div class="col-4">
-            <h2 class="text-center">會員歷史訂單</h2>
-        </div>
- </div> 
+    <div class="col-4">
+        <h2 class="text-center">會員歷史訂單</h2>
+    </div>
+</div>
 
 
 <div class="container mb-3">
-  
+
     <div class="buttoncont">
         <div class="d-flex flex-row justify-content-end mb-2">
-                <a href="<?=$_SERVER['HTTP_REFERER'] ?>" class="btn btn-outline-secondary me-auto" role="button">返回</a>
+            <a href="<?=$_SERVER['HTTP_REFERER'] ?>" class="btn btn-outline-secondary me-auto" role="button">返回</a>
 
-                
-                
-         
+
+
+
         </div>
-        
+
     </div>
 
-  
+
 </div>
 
 
@@ -95,100 +95,101 @@ $nowpage="member_his_order";
 
 
 <div class="container">
-        <div class="list_cont">
-             <table class="table table-striped">
-    
-                <thead>
-                    <tr class="thead">
-                    
-                        
-                        <td> </td>
+    <div class="list_cont">
+        <table class="table table-striped">
 
-                        <td>訂單編號</td>
-                        <td>訂購日期</td>
-                        <td>訂單狀態</td>
-                        <td>訂單金額</td>
-                        <td>訂單備註</td>
-                        <td>訂單明細</td>
-
-                      
-
-                       
-                        
-
-                    </tr>
+            <thead>
+                <tr class="thead">
 
 
-                </thead>
+                    <td> </td>
 
-                <tbody>
-                 <?php foreach ($rows as $r) : ?>
-
-                    <td><a href="order-edit.php?sid=<?= $r['order_id'] ?>"><i class="fa-solid fa-pen-to-square" style="color:#4a493b"></i></a></td>
-                    <td><?= $r['order_id'] ?></td>
-                    <td><?= $r['order_day'] ?></td>
-                    
-                    <td><?= $r['order_state'] ?></td>
-                    <td><?= $r['order_money'] ?></td>
-                    <td><?= $r['order_memo'] ?></td>
-                    <td>
-                     <a href="order_detail.php?sid=<?= $r['order_id'] ?>" style="color:#4a493b">
-                            <i class="fa-solid fa-layer-group"></i></a>
-                    </td>
-                        
-
-                    </tr>
-
-                    
-                 <?php endforeach; ?>
-                </tbody>
+                    <td>訂單編號</td>
+                    <td>訂購日期</td>
+                    <td>訂單狀態</td>
+                    <td>訂單金額</td>
+                    <td>訂單備註</td>
+                    <td>訂單明細</td>
 
 
 
 
-             </table>
 
-      
 
-      
-                    <div class="row">
-                        <div class="col-12 d-flex justify-content-center">
-                            <nav>
-                                <ul class="pagination">
-                                
-                                    <li class="  me-1">
-                                        <a class="page-link" style="color: #4a493b;" href='<?= "?page=({$page} - 1)" ?>'>上一頁</a>
-                                    </li>  
+                </tr>
 
-                                    <?php  for($i=$page-1;$i<=$page+1;$i++):
+
+            </thead>
+
+            <tbody>
+                <?php foreach ($rows as $r) : ?>
+
+                <td><a href="order-edit.php?sid=<?= $r['order_id'] ?>"><i class="fa-solid fa-pen-to-square"
+                            style="color:#4a493b"></i></a></td>
+                <td><?= $r['order_id'] ?></td>
+                <td><?= $r['order_day'] ?></td>
+
+                <td><?= $r['order_state'] ?></td>
+                <td><?= $r['order_money'] ?></td>
+                <td><?= $r['order_memo'] ?></td>
+                <td>
+                    <a href="order_detail.php?sid=<?= $r['order_id'] ?>" style="color:#4a493b">
+                        <i class="fa-solid fa-layer-group"></i></a>
+                </td>
+
+
+                </tr>
+
+
+                <?php endforeach; ?>
+            </tbody>
+
+
+
+
+        </table>
+
+
+
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <nav>
+                    <ul class="pagination">
+
+                        <li class="  me-1">
+                            <a class="page-link" style="color: #4a493b;" href='<?= "?page=({$page} - 1)" ?>'>上一頁</a>
+                        </li>
+
+                        <?php  for($i=$page-1;$i<=$page+1;$i++):
                                     if ($i>=1 and $i<=$totalPage):
                                         ?>
-            
-                                    <li class=" me-2">
-                                        <a class="page-link" style="color: #4a493b;background-color:#f4f4f5;" href="?page=<?=$i?>"><?=$i?></a>
-                                    </li>   
-                                    
 
-                                    <?php  endif;  endfor;?> 
+                        <li class=" me-2">
+                            <a class="page-link" style="color: #4a493b;background-color:#f4f4f5;"
+                                href="?page=<?=$i?>"><?=$i?></a>
+                        </li>
 
-                                    
-                                
 
-                                    
+                        <?php  endif;  endfor;?>
 
 
 
-                                    <li class=" me-1">
-                                        <a class="page-link" style="color: #4a493b;" href="?page=<?= $page + 1 ?>">下一頁</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-       </div>
-       
+
+
+
+
+
+                        <li class=" me-1">
+                            <a class="page-link" style="color: #4a493b;" href="?page=<?= $page + 1 ?>">下一頁</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 
+</div>
 
 
 
@@ -201,28 +202,22 @@ $nowpage="member_his_order";
 
 
 
-<?php include __DIR__.'/parts/script.php';?>
+
+<?php include __DIR__.'/parts/scripts.php';?>
 
 <script>
-   const tr = document.querySelectorAll("tbody tr");
-    const changeColor = [...tr];
-    for (let i in changeColor) {
-        if (i % 2 === 0) {
-            changeColor[i].style = "background-color:#FFFFCC";
-        }
-    };
-
-    function delete_it(sid) {
-        if (confirm(`是否要刪除編號為 ${sid} 的資料?`)) {
-            location.href = 'delete.php?sid=' + sid;
-        }
+const tr = document.querySelectorAll("tbody tr");
+const changeColor = [...tr];
+for (let i in changeColor) {
+    if (i % 2 === 0) {
+        changeColor[i].style = "background-color:#FFFFCC";
     }
+};
 
-  
-
-
-
-
-
+function delete_it(sid) {
+    if (confirm(`是否要刪除編號為 ${sid} 的資料?`)) {
+        location.href = 'delete.php?sid=' + sid;
+    }
+}
 </script>
 <?php include __DIR__.'/parts/html-foot.php';?>

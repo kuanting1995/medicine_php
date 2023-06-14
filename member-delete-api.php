@@ -1,7 +1,7 @@
 <?php
 
 require __DIR__.'/parts/connect_db.php';
-require __DIR__.'/parts/admin_required_for_api.php.';
+require __DIR__.'/parts/admin-required-for-api.php';
 
 $id= isset($_GET['member_id'])?intval($_GET['member_id']):0;
 

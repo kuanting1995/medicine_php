@@ -1,18 +1,18 @@
 <?php require __DIR__ . '/parts/connect_db.php';
+require __DIR__ . '/parts/admin-required.php';
 
 $pageName = 'register';
 $title = '管理員註冊';
 
 ?>
 
-<?php require __DIR__ . '/parts/admin-required.php' ?>
 <?php include __DIR__ . '/parts/html-head.php' ?>
 <?php include __DIR__ . '/parts/css-style.php' ?>
 <?php include __DIR__ . '/parts/navbar.php' ?>
 <?php include __DIR__ . '/parts/sidebars.php' ?>
 
 
-<div class="container">
+<div class="container w-75">
     <div class="row justify-content-center align-items-center" style="height:95vh;">
         <div class="col-lg-5">
             <div class="card">

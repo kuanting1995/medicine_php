@@ -1,12 +1,11 @@
 <?php
 require __DIR__ . '/parts/connect_db.php';
+require __DIR__ . '/parts/admin-required-for-api.php';
 $output = [
     'success' => false,
     'error' => [],
     'postDara' => $_POST,
 ];
-
-require __DIR__ . '/parts/admin-required-for-api.php';
 
 if (!empty($_POST['account'])) {
 $isPass = true;
@@ -38,4 +37,3 @@ $output['msg'] = '未加入新資料';
 }
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
-?>

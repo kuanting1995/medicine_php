@@ -1,28 +1,28 @@
 <?php
 
-require __DIR__.'/parts/connect_db.php';
-require __DIR__.'/parts/admin_required_for_api.php.';
+require __DIR__ . '/parts/connect_db.php';
+require __DIR__ . '/parts/admin-required-for-api.php';
 
-$pdo = mysqli_connect("192.168.21.92", "beebee1", "beebee1", "beebee1");
-
-
+$pdo = mysqli_connect("localhost", "medicine", "medicine", "medicine");
 
 
 
 
 
 
-$id=$_GET['id'];
-
-$sql = "SELECT * FROM `member_list` WHERE `member_id` = $id";
-
-$stmt =mysqli_query($pdo,$sql);
 
 
+$id = $_GET['id'];
+
+$sql = "SELECT * FROM `members` WHERE `member_id` = $id";
+
+$stmt = mysqli_query($pdo, $sql);
 
 
- 
- $export = '
+
+
+
+$export = '
  <table> 
  <tr> 
  <th>會員id </th>
@@ -37,38 +37,43 @@ $stmt =mysqli_query($pdo,$sql);
  
  </tr>
  ';
- while($row = mysqli_fetch_array($stmt))
- {
-      if($row["member_level_id"]==1){$level ="金會員";}
-     elseif($row["member_level_id"]==2){$level ="銀會員";}
-     elseif($row["member_level_id"]==3){$level ="一般會員";}
-     elseif($row["member_level_id"]==5){$level ="停權會員";}
+while ($row = mysqli_fetch_array($stmt)) {
+    if ($row["member_level_id"] == 1) {
+        $level = "金會員";
+    } elseif ($row["member_level_id"] == 2) {
+        $level = "銀會員";
+    } elseif ($row["member_level_id"] == 3) {
+        $level = "一般會員";
+    } elseif ($row["member_level_id"] == 5) {
+        $level = "停權會員";
+    }
 
-     if($row["gender"]=="female"){$gender ="女";}
-     else{$gender ="男";}
- $export .= '
+    if ($row["gender"] == "female") {
+        $gender = "女";
+    } else {
+        $gender = "男";
+    }
+    $export .= '
  <tr>
- <td>'.$row["member_id"].'</td> 
- <td>'.$row["member_name"].'</td> 
- <td>'.$row["email"].'</td> 
- <td>'.$row["mobile"].'</td> 
- <td>'.$gender.'</td> 
- <td>'.$row["birthday"].'</td> 
- <td>'.$row["address_city"].$row["address_dist"].$row["address_rd"].'</td> 
+ <td>' . $row["member_id"] . '</td> 
+ <td>' . $row["member_name"] . '</td> 
+ <td>' . $row["email"] . '</td> 
+ <td>' . $row["mobile"] . '</td> 
+ <td>' . $gender . '</td> 
+ <td>' . $row["birthday"] . '</td> 
+ <td>' . $row["address_city"] . $row["address_dist"] . $row["address_rd"] . '</td> 
 
- <td>'.$level.'</td> 
+ <td>' . $level . '</td> 
 
  
  
  </tr>
  ';
- }
- $export .= '</table>';
- header('Content-Type: application/vnd.ms-excel');
- header('Content-Disposition: attachment; filename=info.xls');
- 
- $export = mb_convert_encoding($export , "Big5" , "UTF-8");
+}
+$export .= '</table>';
+header('Content-Type: application/vnd.ms-excel');
+header('Content-Disposition: attachment; filename=info.xls');
 
- echo $export;
+$export = mb_convert_encoding($export, "Big5", "UTF-8");
 
- 
+echo $export;

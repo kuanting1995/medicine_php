@@ -4,7 +4,7 @@ $t_sql = "SELECT COUNT(1) FROM sidebars";
 
 <div style="height: 5vh"></div>
 <main class="d-flex flex-nowrap h-100" style="justify-content:left;">
-    <div class="d-flex flex-column p-3 sidebar"
+    <div class="d-flex flex-column p-3"
         style="width: 200px; height:100vh;background-color: #a79c8e;border-top-right-radius:30px;border-bottom-right-radius:30px;">
         <ul class="nav nav-pills mb-auto" style="margin-bottom:500px;">
 

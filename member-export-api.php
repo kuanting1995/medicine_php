@@ -1,9 +1,9 @@
 <?php
 
 require __DIR__ . '/parts/connect_db.php';
-require __DIR__ . '/parts/admin_required_for_api.php.';
+require __DIR__ . '/parts/admin_required_for_api.php';
 
-$pdo = mysqli_connect("192.168.21.92", "beebee1", "beebee1", "beebee1");
+$pdo = mysqli_connect("localhost", "medicine", "medicine", "medicine");
 
 $sql = "";
 
@@ -12,16 +12,16 @@ $sql = "";
 
 if (!isset($_GET['export_e_id']) || $_GET['export_e_id'] == "none") {
     if (empty($_GET['src_id'])) {
-        $sql = "SELECT * FROM `member_list`";
+        $sql = "SELECT * FROM `members`";
     } else {
         $src_id = substr($_GET['src_id'], 0, -4);
-        $sql = "SELECT * FROM `member_list` WHERE $src_id ";
+        $sql = "SELECT * FROM `members` WHERE $src_id ";
     }
 } else {
     $id = $_GET['export_s_id'];
     $eid = $_GET['export_e_id'];
 
-    $sql = "SELECT * FROM `member_list` WHERE`member_id` between $id and $eid";
+    $sql = "SELECT * FROM `members` WHERE`member_id` between $id and $eid";
 }
 
 
