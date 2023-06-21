@@ -1,45 +1,54 @@
 <?php
 require __DIR__ . '/parts/connect_db.php';
 require __DIR__ . '/parts/admin-required.php';
-$title = "會員管理頁";
-$nowpage = "members";
+
+$title = "會員搜尋結果";
+$nowpage = "member_src_list";
 
 
 ?>
 
 <?php
 
-$perPage = 7;
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-if ($page < 1) {
-    header('Location: ?page=1');
-    exit;
-}
-$t_sql = "SELECT COUNT(1) FROM `members`";
-$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
-$totalPage = ceil($totalRows / $perPage);
-$showpage = 3; //每次要顯示幾筆分頁
-$cut = floor($showpage / 2); //以目前所在頁次 為中心 往左右各顯示幾個頁次 以無條件捨去
 
-$all = [];
-$sqlall = sprintf("SELECT * FROM `members`");
-$all = $pdo->query($sqlall)->fetchAll();
+$id = $_GET['id'];
+$name = $_GET['name'];
+$city = $_GET['city'];
+$gender = $_GET['gender'];
 
+
+$id = empty($id) ? "" : "`member_id` LIKE '%" . $id . "%'";
+$name = empty($name) ? "" : "`member_name` LIKE '%" . $name . "%'";
+$city = empty($city) ? "" : "`address_city`='$city'";
+$gender = empty($gender) ? "" : "`gender`='$gender'";
+
+$and1 = (!empty($id) and !empty($name)) ? "AND" : "";
+$and2 = (!empty($id) and empty($name) and !empty($city)) ? "AND" : "";
+$and3 = (!empty($id) and empty($name) and empty($city) and !empty($gender)) ? "AND" : "";
+
+$and4 = (!empty($name) and !empty($city)) ? "AND" : "";
+$and5 = (!empty($name) and empty($city) and !empty($gender)) ? "AND" : "";
+
+$and6 = (!empty($city) and !empty($gender)) ? "AND" : "";
+
+
+if (!empty($id) || !empty($name) || !empty($city) || !empty($gender)) {
+    $where = "WHERE";
+};
 
 $rows = [];
-if ($totalPage > 0) {
-    if ($page > $totalPage) {
-        header('Location: ?page' . $totalPage);
-        exit;
-    }
-    $sql = sprintf("SELECT * FROM `members`m
-    JOIN member_level l ON 
-    m.member_level_id = l.id
-    ORDER BY `member_id`
-    DESC LIMIT %s,%s", ($page - 1) * $perPage, $perPage);
-    $rows = $pdo->query($sql)->fetchAll();
-}
+
+$sql =  "SELECT * FROM `members`m 
+JOIN member_level l ON 
+m.member_level_id = l.id
+$where $id $and1 $and2 $and3  $name $and4 $and5 $city $and6 $gender
+";
+
+
+
+$rows = $pdo->query($sql)->fetchAll();
+
 
 ?>
 
@@ -56,40 +65,40 @@ $city_num = count($city);
 ?>
 
 
-<?php include __DIR__ . '/parts/html-head.php' ?>
-<?php include __DIR__ . '/parts/css-style.php' ?>
-<?php include __DIR__ . '/parts/navbar.php' ?>
-<?php include __DIR__ . '/parts/sidebars.php' ?>
 
-<div class="container w-75">
+
+
+
+
+
+<?php include __DIR__ . '/parts/html-head.php'; ?>
+<?php include __DIR__ . '/parts/navbar.php'; ?>
+
+
+<div class="row justify-content-center mb-5">
+    <div class="col-4">
+        <h2 class="text-center">會員搜尋結果:</h2>
+    </div>
+</div>
+
+<div class="container mb-5">
+
+
+
+
     <div class="buttoncont">
-        <div class="row justify-content-start my-1">
+        <div class="row justify-content-start mb-2">
             <div class="">
-                <a href="member-add.php" class="btn btn-outline-secondary btn-detail me-4 " role=" button">新增會員</a>
+                <a href="member_list.php" class="btn btn-outline-secondary me-auto" role="button">返回</a>
+                <a href="member_add.php" class="btn btn-detail me-4 " role="button">新增會員</a>
+
+
             </div>
         </div>
     </div>
     <div class="export_box ">
         <div class="w-100 d-flex justify-content-end mb-3">
-            <form class="d-flex w-50" role="search" onsubmit="exPort(event)">
-                <select name="export_s_id" id="export_s_id" class="form-select form-select-sm me-2">
-                    <option value="none" selected disabled hidden>自幾號</option>
-                    <?php foreach ($all as $a) : ?>
-
-                    <option value="<?= $a['member_id'] ?>"><?= $a['member_id'] ?></option>
-                    <?php endforeach; ?>
-
-                </select>
-
-                <select name="export_e_id" id="export_e_id" class="form-select form-select-sm me-2">
-                    <option value="none" selected>全筆</option>
-                    <?php foreach ($all as $a) : ?>
-                    <option value="<?= $a['member_id'] ?>"><?= $a['member_id'] ?></option>
-                    <?php endforeach; ?>
-
-                </select>
-
-
+            <form class="d-flex " role="search" onsubmit="exPort(event)">
 
 
 
@@ -109,11 +118,9 @@ $city_num = count($city);
             <div class="w-100 d-flex justify-content-end">
                 <form name="src" class="d-flex" role="search" onsubmit="Serch(event)">
 
-                    <input class="form-control me-2" type="search" placeholder="搜尋ID" name="src_id" id="src_id">
+                    <input class="form-control me-2" type="search" placeholder="ID" name="src_id" id="src_id">
 
-                    <input class="form-control me-2" type="search" placeholder="搜尋會員姓名" name="src_name" id="src_name">
-
-                    <? /*性別*/?>
+                    <input class="form-control me-2" type="search" placeholder="會員姓名" name="src_name" id="src_name">
                     <select class="form-select form-select me-2" type="search" placeholder="會員性別" name="src_gen"
                         id="src_gen">
                         <option value="" selected>性別</option>
@@ -122,12 +129,11 @@ $city_num = count($city);
                         <option value="male">男</option>
                     </select>
 
-                    <? /*縣市*/?>
-
                     <select class="form-select me-2" name="src_city" id="src_city"> </select>
 
 
-                    <? /*查詢btn*/?>
+
+
 
                     <button class="btn btn-outline-secondary" type="submit"><i
                             class="fa-solid fa-magnifying-glass"></i></button>
@@ -137,6 +143,13 @@ $city_num = count($city);
 
 
             </div>
+
+            <div class="col-3">
+
+            </div>
+
+
+
 
         </div>
     </div>
@@ -169,7 +182,6 @@ $city_num = count($city);
 
                         <td scope="col" style="color:#4a493b">
                             詳細資料</td>
-
                     </tr>
 
 
@@ -180,7 +192,7 @@ $city_num = count($city);
 
 
                     <tr style="color: <?= $r['member_level_id'] === 5 ? "red" : '#4a493b' ?>;">
-                        <td style="color:#4a493b"><a href="member-edit.php?member_id=<?= $r['member_id'] ?>">
+                        <td style="color:#4a493b"><a href="member_edit.php?member_id=<?= $r['member_id'] ?>">
                                 <i class="fa-solid fa-pen-to-square" style="color:#4a493b"></i></a></td>
 
                         <td><?= $r['member_id'] ?></td>
@@ -194,7 +206,7 @@ $city_num = count($city);
                                                 } elseif ($r['member_level_id'] == 2) {
                                                     echo "LightSlateGray";
                                                 } elseif ($r['member_level_id'] == 3) {
-                                                    echo "navy";
+                                                    echo "";
                                                 } elseif ($r['member_level_id'] == 5) {
                                                     echo "red";
                                                 } ?>">
@@ -202,7 +214,7 @@ $city_num = count($city);
                         </td>
 
                         <td style="color:#4a493b">
-                            <a href="member-detail.php?member_id=<?= $r['member_id'] ?>" class="btn"> <i
+                            <a href="member_detail.php?member_id=<?= $r['member_id'] ?>" class="btn"> <i
                                     class="fa-solid fa-layer-group"></i></a>
                         </td>
                     </tr>
@@ -219,59 +231,7 @@ $city_num = count($city);
 
 
 
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center">
-                    <nav>
-                        <ul class="pagination">
-
-                            <li class="<?= $page == 1 ? 'disabled' : '' ?>  me-1">
-                                <a class="page-link" style="color: #4a493b;" href='<?= "?page=({$page} - 1)" ?>'>上一頁</a>
-                            </li>
-
-                            <?php
-                            $left = 1;
-                            $right = $totalPage;
-                            if ($totalPage > $showpage) {
-                                if ($page <= $cut) {
-                                    $left = $page - 1;
-                                } else {
-                                    $left = $cut;
-                                }
-                                if ($page > $totalPage - $cut) {
-                                    $right = ($page == $totalPage ? 0 : 1);
-                                    $left += $left - $right;
-                                } else {
-                                    $right = $cut + ($cut - $left);
-                                }
-                                $left = $page - $left;
-                                $right = $page + $right;
-                            }
-
-                            for ($i = $left; $i <= $right; $i++) : ?>
-                            <li class=" me-2">
-                                <a class="page-link" style="color: #4a493b;background-color:#f4f4f5;"
-                                    href="?page=<?= $i ?>"><?= $i ?></a>
-                            </li>
-
-
-                            <?php endfor; ?>
-
-
-
-
-
-
-
-
-                            <li class="<?= $page == $totalPage ? 'disabled' : '' ?> me-1">
-                                <a class="page-link" style="color: #4a493b;" href="?page=<?= $page + 1 ?>">下一頁</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
         </div>
-
     </div>
 
 
@@ -283,7 +243,7 @@ $city_num = count($city);
 
 
 
-    <?php include __DIR__ . '/parts/scripts.php' ?>
+    <?php include __DIR__ . '/parts/scripts.php'; ?>
 
     <script>
     const tr = document.querySelectorAll("tbody tr");
@@ -304,12 +264,15 @@ $city_num = count($city);
     }
     citysele.innerHTML = `<option value="" selected hidden>縣市</option>` + cityinner;
 
+    let expid = "";
+    <?php foreach ($rows as $r) : ?>
+    expid = "`member_id`=" + <?= $r['member_id'] ?> + " OR " + expid
+    <?php endforeach; ?>
 
     const exPort = function(event) {
         event.preventDefault();
-        const sid = (document.querySelector('#export_s_id').value);
-        const eid = (document.querySelector('#export_e_id').value);
-        location.href = `member_export_api.php?export_s_id=${sid}&export_e_id=${eid}`
+
+        location.href = `member-export-api.php?src_id=${expid}}`
     }
 
 

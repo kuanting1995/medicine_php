@@ -1,4 +1,7 @@
 <?php
+
+define('PROJ_ROOT', '/medicine');
+
 $db_host = 'localhost'; //連哪台主機
 $db_user = 'medicine'; //db使用者帳號
 $db_pass = 'medicine'; //db使用者密碼 //XAMPP預設沒有密碼

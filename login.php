@@ -27,7 +27,7 @@ if (isset($_SESSION['admin'])) {
                     <form name="form1" onsubmit="checkForm(event)" novalidate>
 
                         <div class="mb-3">
-                            <label for="acount" class="form-label">帳號</label>
+                            <label for="account" class="form-label">帳號</label>
                             <input type="text" class="form-control" id="account" name="account" required>
                             <div class="form-text"></div>
                         </div>
